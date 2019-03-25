@@ -10,17 +10,25 @@
 
     <LinearLayout
             android:id="@+id/trending_header_layout"
+            android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/photos_header_guideline"
-            android:gravity="center"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         <TextView
-                android:text="@string/popular_title"
-                android:textSize="26dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            android:text="@string/whats_popular_today"
+            android:textSize="26dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="@string/see_recently_added_photos_highest_pulse"
+            android:textSize="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
@@ -29,7 +37,7 @@
             android:layout_width="1dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.10" />
+            app:layout_constraintGuide_percent="0.12" />
 
     <android.support.v7.widget.RecyclerView
             android:id="@+id/popular_photos_list"

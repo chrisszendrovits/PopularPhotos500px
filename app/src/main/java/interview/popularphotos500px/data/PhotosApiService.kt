@@ -7,6 +7,6 @@ import retrofit2.http.GET
 
 interface PhotosApiService {
 
-    @GET("photos?feature=popular&consumer_key=" + BuildConfig.apiKey + "&image_size=20")
+    @GET("photos?feature=popular&consumer_key=" + BuildConfig.apiKey + "&image_size=30,31,4,20")
     fun getPopularPhotos() : Observable<PhotosResponse>
 }

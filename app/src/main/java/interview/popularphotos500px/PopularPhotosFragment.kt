@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import interview.popularphotos500px.data.Model.Photo
 import interview.popularphotos500px.data.Model.PhotosResponse
@@ -19,7 +20,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-class PopularPhotosFragment : android.support.v4.app.Fragment() {
+class PopularPhotosFragment : android.support.v4.app.Fragment(), PhotosAdapter.PhotoClickListener {
 
     private var adapterPhotos: PhotosAdapter? = null
     private var apiCompositeDisposable: CompositeDisposable? = null
@@ -56,6 +57,8 @@ class PopularPhotosFragment : android.support.v4.app.Fragment() {
     private fun getPhotoData() {
         val gsonBuilder = GsonBuilder()
         gsonBuilder.serializeNulls()
+        gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+
         val factory = GsonConverterFactory.create(gsonBuilder.create())
 
         val requestBuilder = Retrofit.Builder()
@@ -74,12 +77,23 @@ class PopularPhotosFragment : android.support.v4.app.Fragment() {
 
     private fun handleResponse(response: PhotosResponse) {
         lstPhoto = ArrayList(response.photos)
-        adapterPhotos = PhotosAdapter(lstPhoto!!)
+        adapterPhotos = PhotosAdapter(lstPhoto!!, this)
         popular_photos_list.adapter = adapterPhotos
     }
 
     override fun onDestroy() {
         super.onDestroy()
         apiCompositeDisposable?.clear()
+    }
+
+    override fun onPhotoClick(photo: Photo) {
+        val activity = activity
+
+        // show the photo fragment on photo item clicked
+        activity!!.supportFragmentManager
+            .beginTransaction()
+            .add(R.id.root_frame_layout, PhotoFragment.newInstance(photo), "photoFragment")
+            .addToBackStack(null)
+            .commit()
     }
 }

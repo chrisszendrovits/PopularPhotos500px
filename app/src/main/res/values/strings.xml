@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">PopularPhotos500px</string>
-    <string name="popular_title">Popular</string>
+    <string name="whats_popular_today">What\'s popular today</string>
+    <string name="see_recently_added_photos_highest_pulse">See recently added photos with the highest Pulse.</string>
 </resources>
