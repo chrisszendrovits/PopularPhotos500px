@@ -1,4 +1,4 @@
-package interview.popularphotos500px
+package interview.popularphotos500px.popular
 
 enum class ImageSizing(val id: Int, val value: Int) {
     LONGEST_EDGE_256PX(30, 256),

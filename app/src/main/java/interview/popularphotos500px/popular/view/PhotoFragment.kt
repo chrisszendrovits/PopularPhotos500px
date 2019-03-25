@@ -1,20 +1,24 @@
-package interview.popularphotos500px
+package interview.popularphotos500px.popular.view
 
+import android.arch.lifecycle.ViewModelProviders
+import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
+import interview.popularphotos500px.popular.ImageSizing
+import interview.popularphotos500px.R
 import interview.popularphotos500px.data.Model.Image
 import interview.popularphotos500px.data.Model.Photo
-import kotlinx.android.synthetic.main.fragment_photo_layout.*
-import java.text.SimpleDateFormat
+import interview.popularphotos500px.popular.PhotoDetailsViewModel
+import interview.popularphotos500px.databinding.FragmentPhotoDetailsLayoutBinding
+import kotlinx.android.synthetic.main.fragment_photo_details_layout.*
 
 class PhotoFragment : android.support.v4.app.Fragment() {
 
-    private var layout: View? = null
-    public lateinit var photo: Photo
+    protected lateinit var viewModel: PhotoDetailsViewModel;
+    protected lateinit var photo: Photo;
 
     companion object {
         fun newInstance(photo: Photo): android.support.v4.app.Fragment {
@@ -25,9 +29,12 @@ class PhotoFragment : android.support.v4.app.Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        if (layout == null) {
-            layout = inflater.inflate(R.layout.fragment_photo_layout, container, false) as ConstraintLayout
-        }
+        var binding : FragmentPhotoDetailsLayoutBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_photo_details_layout, container, false)
+        var layout = binding.root
+
+        viewModel = ViewModelProviders.of(this, PhotoDetailsViewModel.VMFactory(photo)).get(PhotoDetailsViewModel::class.java)
+        binding.viewModel = viewModel
+
         return layout
     }
 
@@ -41,19 +48,14 @@ class PhotoFragment : android.support.v4.app.Fragment() {
                 .popBackStackImmediate()
         })
 
-        val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ddZ").parse(photo.createdAt)
-
-        photo_date_text_view.text = SimpleDateFormat("MMM d, yyyy").format(date)
-        photo_name_text_view.text = photo.name
-
         // find 300px image by using a specific sizeId
-        val image: Image? = photo.getImageBySizeId(ImageSizing.HEIGHT_300PX.id)
+        val image: Image? = viewModel.getImage(ImageSizing.HEIGHT_300PX)
         val factor = activity!!.getResources().getDisplayMetrics().density
         photo_image_view.layoutParams.height = image!!.height * factor.toInt()
 
         // use glide to async download the image from a url
         Glide.with(photo_image_view)
-            .load(image!!.url)
+            .load(image.url)
             .into(photo_image_view);
     }
 }

@@ -1,11 +1,14 @@
 package interview.popularphotos500px.data.Model
 
-import interview.popularphotos500px.ImageSizing
+import interview.popularphotos500px.popular.ImageSizing
 
-data class Photo(var name: String,
+data class Photo(var id: Int,
+                 var name: String,
                  var description: String,
+                 var user: User,
                  var width: Int,
                  var height: Int,
+                 var votesCount: Int,
                  var createdAt: String,
                  var images: List<Image>) {
 

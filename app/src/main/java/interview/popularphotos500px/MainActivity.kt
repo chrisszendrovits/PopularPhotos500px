@@ -2,6 +2,7 @@ package interview.popularphotos500px
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import interview.popularphotos500px.popular.view.PopularPhotosFragment
 
 class MainActivity : AppCompatActivity() {
 
