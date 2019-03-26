@@ -15,14 +15,14 @@ import interview.popularphotos500px.popular.PhotoDetailsViewModel
 import interview.popularphotos500px.databinding.FragmentPhotoDetailsLayoutBinding
 import kotlinx.android.synthetic.main.fragment_photo_details_layout.*
 
-class PhotoFragment : android.support.v4.app.Fragment() {
+class PhotoDetailsFragment : android.support.v4.app.Fragment() {
 
     protected lateinit var viewModel: PhotoDetailsViewModel;
     protected lateinit var photo: Photo;
 
     companion object {
         fun newInstance(photo: Photo): android.support.v4.app.Fragment {
-            val fragment = PhotoFragment()
+            val fragment = PhotoDetailsFragment()
             fragment.photo = photo
             return fragment
         }

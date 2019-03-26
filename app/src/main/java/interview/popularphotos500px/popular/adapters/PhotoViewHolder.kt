@@ -16,16 +16,14 @@ class PhotoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     fun bindTo(photo: Photo?, listener: PagedPhotoAdapter.PhotoListItemListener) {
         // find 256px image by using a specific sizeId
         val image: Image? = photo?.getImageBySizeId(ImageSizing.LONGEST_EDGE_256PX.id)
-        val factor = itemView.getContext().getResources().getDisplayMetrics().density
 
-        // set the dimension of the imageView
-        itemView.ivPreviewPhoto.layoutParams.width = image!!.width * factor.toInt()
-        itemView.ivPreviewPhoto.layoutParams.height = image.height * factor.toInt()
-        itemView.setOnClickListener{ listener.onPhotoListItemClick(photo) }
+        if (photo != null) {
+            itemView.setOnClickListener { listener.onPhotoListItemClick(photo) }
+        }
 
         // use glide to async download the image from a url
         Glide.with(itemView)
-            .load(image.url)
+            .load(image!!.url)
             .into(itemView.ivPreviewPhoto);
     }
 
